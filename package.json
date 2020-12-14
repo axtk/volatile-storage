@@ -1,0 +1,20 @@
+{
+  "name": "volatile-storage",
+  "version": "1.0.0",
+  "description": "A volatile storage with a localStorage-like API",
+  "main": "index.js",
+  "keywords": [
+    "storage",
+    "ttl",
+    "lifetime",
+    "expiration",
+    "capacity",
+    "volatile",
+    "localStorage"
+  ],
+  "author": "axtk",
+  "license": "ISC",
+  "dependencies": {
+    "memory-storage": "github:axtk/memory-storage"
+  }
+}
