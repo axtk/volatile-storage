@@ -1,4 +1,4 @@
-import MemoryStorage from 'memory-storage';
+const MemoryStorage = require('memory-storage');
 
 class VolatileStorage {
     constructor(props = {}) {
@@ -94,4 +94,4 @@ class VolatileStorage {
     }
 }
 
-export default VolatileStorage;
+module.exports = VolatileStorage;
