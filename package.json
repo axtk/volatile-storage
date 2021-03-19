@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "A volatile storage with a localStorage-like API",
   "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
   "keywords": [
     "storage",
     "ttl",
