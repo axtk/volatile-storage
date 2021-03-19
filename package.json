@@ -1,6 +1,6 @@
 {
   "name": "@axtk/volatile-storage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A volatile storage with a localStorage-like API",
   "main": "index.js",
   "scripts": {
