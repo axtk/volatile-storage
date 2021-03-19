@@ -1,4 +1,4 @@
-const MemoryStorage = require('memory-storage');
+const MemoryStorage = require('@axtk/memory-storage');
 
 class VolatileStorage {
     constructor(props = {}) {
@@ -14,14 +14,20 @@ class VolatileStorage {
         this.capacity = typeof capacity === 'number' ? capacity : Infinity;
         this.scheduleRevision();
     }
+    getCapacity() {
+        return this.capacity;
+    }
     setMaxAge(maxAge) {
         this.maxAge = typeof maxAge === 'number' ? maxAge : Infinity;
         this.scheduleRevision();
     }
+    getMaxAge() {
+        return this.maxAge;
+    }
     hasValidContent(item) {
         return (
             Boolean(item) &&
-            item.t + this.maxAge > Date.now() &&
+            item.t + (item.d === undefined ? this.maxAge : item.d) > Date.now() &&
             item.v === this.version
         );
     }
@@ -34,11 +40,15 @@ class VolatileStorage {
         }
         catch(e) {}
 
+        // Infinity is stringified as null
+        if (item && item.d === null)
+            item.d = Infinity;
+
         if (this.hasValidContent(item)) return item.x;
         else if (item) this.removeItem(key);
     }
-    async setItem(key, value, options) {
-        let item = {x: value, t: Date.now(), v: this.version};
+    async setItem(key, value, options = {}) {
+        let item = {x: value, t: Date.now(), d: options.maxAge, v: this.version};
 
         await this.storage.setItem(this.ns + key, JSON.stringify(item));
         this.scheduleRevision();
@@ -58,11 +68,8 @@ class VolatileStorage {
         if (typeof storage.keys === 'function')
             keys = await storage.keys();
         else {
+            let size = await this.length();
             keys = [];
-
-            let size = typeof storage.length === 'function' ?
-                await storage.length() :
-                storage.length;
 
             for (let i = 0; i < size; i++)
                 keys.push(await storage.key(i));
@@ -75,6 +82,13 @@ class VolatileStorage {
         }
 
         return keys;
+    }
+    async length() {
+        let {storage} = this;
+
+        return typeof storage.length === 'function' ?
+            await storage.length() :
+            storage.length;
     }
     async revise() {
         let keys = await this.keys();

@@ -1,21 +1,24 @@
-# volatile-storage
+[![npm](https://img.shields.io/npm/v/@axtk/volatile-storage?labelColor=royalblue&color=royalblue&style=flat-square)](https://www.npmjs.com/package/@axtk/volatile-storage)
+![browser](https://img.shields.io/badge/browser-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
+![node](https://img.shields.io/badge/node-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
 
 *A volatile storage with a localStorage-like API*
 
-## Exports
+## `class VolatileStorage`
 
-### `class VolatileStorage`
-
-Basic usage:
+Usage:
 
 ```js
+const VolatileStorage = require('@axtk/volatile-storage');
+
 const storage = new VolatileStorage({
     storage: window.localStorage,
-    maxAge: 60000, // 1 minute
+    maxAge: 60000, // in milliseconds
     capacity: 100
 });
 
 await storage.setItem('x', 1);
+await storage.setItem('status', 'done', {maxAge: 120000});
 
 let x = await storage.getItem('x');
 ```
@@ -40,13 +43,3 @@ let x = await storage.getItem('x');
   - Default: `undefined`.
 
 The methods of the `VolatileStorage` class are asynchronous versions of the [`Storage`](https://developer.mozilla.org/en-US/docs/Web/API/Storage) methods.
-
-## Installation
-
-```
-npm i github:axtk/volatile-storage
-```
-
----
-
-\#browser \#nodejs
