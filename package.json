@@ -18,7 +18,7 @@
   "author": "axtk",
   "license": "MIT",
   "dependencies": {
-    "@axtk/memory-storage": "^1.0.2"
+    "@axtk/memory-storage": "^1.0.3"
   },
   "repository": {
     "type": "git",
