@@ -2,11 +2,9 @@
 ![browser](https://img.shields.io/badge/browser-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
 ![node](https://img.shields.io/badge/node-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
 
-*A volatile storage with a localStorage-like API*
+*A storage with a customizable item lifetime and capacity with a localStorage-like API*
 
 ## `class VolatileStorage`
-
-Usage:
 
 ```js
 const VolatileStorage = require('@axtk/volatile-storage');
