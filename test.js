@@ -3,7 +3,7 @@ const delay = dt => new Promise(resolve => setTimeout(resolve, dt));
 
 (async () => {
 
-let storage, keys, len;
+let storage, keys, keys0, len, len0;
 let x, y, z, a, b;
 
 storage = new VolatileStorage({capacity: 2, maxAge: 2000});
@@ -11,13 +11,22 @@ console.assert(storage.getCapacity() === 2, 'capacity');
 console.assert(storage.getMaxAge() === 2000, 'max age');
 
 await storage.setItem('x', 0);
+
+len0 = await storage.length();
+keys0 = await storage.keys();
+await storage.setItem('x', 1);
+len = await storage.length();
+keys = await storage.keys();
+console.assert(len0 === len, 'same length after adding existing key');
+console.assert(JSON.stringify(keys0) === JSON.stringify(keys), 'same keys after adding existing key');
+
 await storage.setItem('y', 'test');
 
 len = await storage.length();
-console.assert(len === 2, 'length');
+console.assert(len === 2, 'length after adding x, y');
 
 x = await storage.getItem('x');
-console.assert(x === 0, 'numeric value of x');
+console.assert(x === 1, 'numeric value of x');
 
 await storage.setItem('z', {a: [1, 2]});
 await delay(100);
